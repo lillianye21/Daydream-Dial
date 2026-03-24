@@ -66,7 +66,7 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
           setIsSaving(true);
           try {
              // Save to supabase
-             const { error } = await supabase.from('speaking_history').insert({
+             const { error } = await supabase.from('daydream_speaking_history').insert({
                 topic: topic,
                 duration_seconds: 60,
              });
@@ -183,7 +183,7 @@ function HistoryView({ onBack }: { onBack: () => void }) {
     async function fetchHistory() {
       setIsLoading(true);
       const { data, error } = await supabase
-        .from('speaking_history')
+        .from('daydream_speaking_history')
         .select('*')
         .order('created_at', { ascending: false });
         
@@ -256,7 +256,7 @@ export default function Home() {
     async function fetchTopics() {
       setIsLoadingTopics(true);
       const { data, error } = await supabase
-        .from('topics')
+        .from('daydream_topics')
         .select('content')
         .eq('is_active', true)
         .order('created_at', { ascending: true });
@@ -304,7 +304,7 @@ export default function Home() {
   const handleSessionComplete = async () => {
     // Remove the completed topic from our active list by exact string match
     setTopics(prev => prev.filter(t => t !== selectedTopicStr));
-    await supabase.from('topics').update({ is_active: false }).eq('content', selectedTopicStr);
+    await supabase.from('daydream_topics').update({ is_active: false }).eq('content', selectedTopicStr);
   };
 
   return (
@@ -463,7 +463,7 @@ export default function Home() {
                   setTopics([val, ...topics]);
                   setNewTopicVal("");
                   setShowAddModal(false);
-                  await supabase.from('topics').insert({ content: val, is_active: true });
+                  await supabase.from('daydream_topics').insert({ content: val, is_active: true });
                 }
               }}
               className="w-full rounded-2xl bg-black py-4 text-lg font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(225,29,72,1)] active:translate-y-0 active:shadow-none"
