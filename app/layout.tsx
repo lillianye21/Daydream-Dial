@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fredoka } from "next/font/google";
+import { Agentation } from "agentation";
 import "./globals.css";
 
 const fredoka = Fredoka({
@@ -24,6 +25,7 @@ export default function RootLayout({
       </head>
       <body className={`${fredoka.variable} font-sans antialiased`}>
         {children}
+        {process.env.NODE_ENV === "development" && <Agentation />}
       </body>
     </html>
   );

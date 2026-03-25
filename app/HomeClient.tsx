@@ -323,7 +323,29 @@ export default function Home() {
       </div>
 
       {view === 'spinner' ? (
-        <div className="flex flex-col items-center w-full max-w-5xl">
+        <div className="flex flex-col items-center w-full max-w-5xl relative">
+          {/* Illustrations */}
+          <img 
+            src="/images/bunny3.jpg" 
+            alt="" 
+            className="absolute -top-[392px] -left-10 w-56 h-auto pointer-events-none animate-float-slow z-0 opacity-90 mix-blend-multiply"
+          />
+          <img 
+            src="/images/bunny.jpg" 
+            alt="" 
+            className="absolute -top-[326px] -right-16 w-52 h-auto pointer-events-none animate-float z-0 opacity-90 mix-blend-multiply"
+          />
+          <img 
+            src="/images/girl.png" 
+            alt="" 
+            className="absolute -bottom-[520px] left-1/2 -translate-x-[60%] w-[32rem] h-auto pointer-events-none animate-drift z-0 opacity-95"
+          />
+          <img 
+            src="/images/bunny2.jpg" 
+            alt="" 
+            className="absolute -bottom-[342px] -right-[130px] w-56 h-auto pointer-events-none animate-float-slow z-0 opacity-90 mix-blend-multiply"
+          />
+
         <main className="flex h-[500px] w-full items-center justify-between rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-12 shadow-[12px_12px_0px_0px_#f9afbd] transition-all relative">
           
           <button 
@@ -501,20 +523,20 @@ export default function Home() {
             >
               ✕
             </button>
-            <h2 className="text-sm font-bold uppercase tracking-widest text-[#f7a1b2] mt-2">Your Topic</h2>
-            <p className="text-3xl font-bold tracking-tight text-center leading-tight">
+            <h2 className="text-lg font-bold uppercase tracking-widest text-[#f7a1b2] mt-2">Your Topic</h2>
+            <p className="text-3xl font-bold tracking-tight text-center leading-tight text-[#c04b6c] drop-shadow-sm">
               {selectedTopicStr}
             </p>
             <div className="flex w-full flex-col gap-3 mt-4">
               <button 
                 onClick={handleSelectTopic}
-                className="w-full rounded-2xl bg-[#dbafde] py-4 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
+                className="w-full rounded-2xl border-4 border-[#b08ba6] bg-[#f2e1f2] py-3 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
               >
                 Select Topic
               </button>
               <button 
                 onClick={handleSpin}
-                className="w-full rounded-2xl border-4 border-[#4a2b4d] bg-[#f8cedd] py-3 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none"
+                className="w-full rounded-2xl border-4 border-[#b08ba6] bg-[#fbe2eb] py-3 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none"
               >
                 Respin
               </button>
