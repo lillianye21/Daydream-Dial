@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Fredoka } from "next/font/google";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
   subsets: ["latin"],
 });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/YOUR_PROJECT_ID.css" />
       </head>
-      <body className={`${outfit.variable} font-sans antialiased`}>
+      <body className={`${fredoka.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

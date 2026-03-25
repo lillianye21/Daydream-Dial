@@ -2,24 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase/client";
+import localFont from 'next/font/local';
+
+const retrogression = localFont({ src: '../public/fonts/Retrogression-Regular.otf' });
 
 function TopicBankView({ topics, onBack }: { topics: string[], onBack: () => void }) {
   return (
-    <div className="flex h-[500px] w-full max-w-5xl flex-col rounded-3xl border-4 border-black bg-white p-10 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative transition-all overflow-hidden">
+    <div className="flex h-[500px] w-full max-w-5xl flex-col rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-10 shadow-[12px_12px_0px_0px_#f9afbd] relative transition-all overflow-hidden">
       <div className="flex justify-between items-center mb-8">
         <button 
           onClick={onBack}
-          className="text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-black transition-colors"
+          className="text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
         >
           ← Back
         </button>
-        <h2 className="text-2xl font-extrabold tracking-tight">
+        <h2 className="text-2xl font-extrabold tracking-tight text-[#8a5a83]">
           Topic Bank
         </h2>
         <div className="w-16"></div> {/* spacer to center title */}
       </div>
 
-      <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-zinc-200">
+      <div className="flex-1 overflow-y-auto pr-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#d2a8d6] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#b08ba6]">
         {topics.length === 0 ? (
           <div className="flex h-full items-center justify-center flex-col gap-2">
             <div className="text-5xl">🕸️</div>
@@ -28,8 +31,8 @@ function TopicBankView({ topics, onBack }: { topics: string[], onBack: () => voi
         ) : (
           <div className="flex flex-col gap-3 pb-8">
             {topics.map((topic, index) => (
-              <div key={index} className="flex p-5 rounded-2xl border-2 border-zinc-100 bg-zinc-50 hover:border-black hover:bg-white transition-colors">
-                 <span className="font-bold text-lg leading-tight">{topic}</span>
+              <div key={index} className="flex p-5 rounded-2xl border-2 border-[#f7e4e9] bg-[#fdfafb] hover:border-[#dbafde] hover:bg-white transition-colors">
+                 <span className={`font-bold text-lg leading-tight ${index % 2 === 0 ? 'text-[#c04b6c]' : 'text-[#d67597]'}`}>{topic}</span>
               </div>
             ))}
           </div>
@@ -99,16 +102,16 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
   const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
   return (
-    <div className="flex h-[500px] w-full max-w-5xl flex-col items-center justify-center rounded-3xl border-4 border-black bg-white p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] text-center relative transition-all">
+    <div className="flex h-[500px] w-full max-w-5xl flex-col items-center justify-center rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-12 shadow-[12px_12px_0px_0px_#f9afbd] text-center relative transition-all">
       <button 
         onClick={onBack}
-        className="absolute top-8 left-8 text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-black transition-colors"
+        className="absolute top-8 left-8 text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
       >
         ← Back
       </button>
 
-      <h2 className={`text-xl font-bold uppercase tracking-widest mb-4 ${phase === 'completed' ? 'text-black' : 'text-rose-500'}`}>
-        {phase === 'brainstorm' ? 'Brainstorming Session' : phase === 'speak' ? 'Speaking Session' : 'Session Complete'}
+      <h2 className={`text-xl font-bold uppercase tracking-widest mb-4 ${phase === 'completed' ? 'text-[#4a2b4d]' : 'text-[#f7a1b2]'}`}>
+        {phase === 'brainstorm' ? 'Brainstorming Session 💭' : phase === 'speak' ? 'Speaking Session 🎤' : 'Session Complete ✨'}
       </h2>
       
       <p className="text-[2rem] font-extrabold tracking-tight leading-tight max-w-2xl mb-12">
@@ -125,13 +128,13 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
             <div className="flex gap-4">
               <button 
                 onClick={handleStart}
-                className="rounded-2xl bg-black px-12 py-4 text-xl font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(225,29,72,1)] active:translate-y-0 active:shadow-none"
+                className="rounded-2xl bg-[#dbafde] px-12 py-4 text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
               >
                 {phase === 'brainstorm' ? 'Start Brainstorming' : 'Start Speaking Now'}
               </button>
               <button 
                 onClick={() => { setTimeLeft(0); setIsRunning(true); }}
-                className="rounded-2xl px-8 py-4 text-xl font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                className="rounded-2xl px-8 py-4 text-xl font-bold text-[#f7a1b2] hover:text-[#e36b89] hover:bg-[#fdfafb] transition-colors"
               >
                 End Session
               </button>
@@ -140,7 +143,7 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
             <div className="flex gap-4">
               <button 
                 onClick={isRunning ? handlePause : handleStart}
-                className="rounded-2xl border-4 border-black bg-white px-12 py-3 text-xl font-bold text-black transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none min-w-[160px]"
+                className="rounded-2xl border-4 border-[#4a2b4d] bg-white px-12 py-3 text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none min-w-[160px]"
               >
                 {isRunning ? 'Pause' : 'Resume'}
               </button>
@@ -149,13 +152,13 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
                   setIsRunning(false);
                   setTimeLeft(60);
                 }}
-                className="rounded-2xl px-8 py-3 text-xl font-bold text-zinc-500 hover:text-black hover:bg-zinc-100 transition-colors"
+                className="rounded-2xl px-8 py-3 text-xl font-bold text-[#b08ba6] hover:text-[#4a2b4d] hover:bg-[#f7e4e9] transition-colors"
               >
                 Restart
               </button>
               <button 
                 onClick={() => { setTimeLeft(0); setIsRunning(true); }}
-                className="rounded-2xl px-8 py-3 text-xl font-bold text-rose-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                className="rounded-2xl px-8 py-3 text-xl font-bold text-[#f7a1b2] hover:text-[#e36b89] hover:bg-[#fdfafb] transition-colors"
               >
                 End Session
               </button>
@@ -166,7 +169,7 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
         <button 
           onClick={onBack}
           disabled={isSaving}
-          className="rounded-2xl bg-rose-500 px-12 py-4 text-xl font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:cursor-wait"
+          className="rounded-2xl bg-[#f9afbd] px-12 py-4 text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:cursor-wait"
         >
           {isSaving ? 'Saving session log...' : 'Return to Spinner'}
         </button>
@@ -196,39 +199,39 @@ function HistoryView({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <div className="flex h-[500px] w-full max-w-5xl flex-col rounded-3xl border-4 border-black bg-white p-10 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative transition-all overflow-hidden">
+    <div className="flex h-[500px] w-full max-w-5xl flex-col rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-10 shadow-[12px_12px_0px_0px_#f9afbd] relative transition-all overflow-hidden">
       <div className="flex justify-between items-center mb-8">
         <button 
           onClick={onBack}
-          className="text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-black transition-colors"
+          className="text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
         >
           ← Back
         </button>
-        <h2 className="text-2xl font-extrabold tracking-tight">
+        <h2 className="text-2xl font-extrabold tracking-tight text-[#4a2b4d]">
           Speaking History
         </h2>
         <div className="w-16"></div> {/* spacer to center title */}
       </div>
 
-      <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-zinc-200">
+      <div className="flex-1 overflow-y-auto pr-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#d2a8d6] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#b08ba6]">
         {isLoading ? (
           <div className="flex h-full items-center justify-center">
-            <div className="text-zinc-400 font-bold uppercase tracking-widest animate-pulse">Loading Logs...</div>
+            <div className="text-[#b08ba6] font-bold uppercase tracking-widest animate-pulse">Loading Logs...</div>
           </div>
         ) : history.length === 0 ? (
           <div className="flex h-full items-center justify-center flex-col gap-2">
-            <div className="text-5xl">🕸️</div>
-            <div className="text-zinc-500 font-medium">No speaking sessions recorded yet.</div>
+            <div className="text-5xl">☁️</div>
+            <div className="text-[#b08ba6] font-medium">No speaking sessions recorded yet.</div>
           </div>
         ) : (
           <div className="flex flex-col gap-3 pb-8">
             {history.map((log) => (
-              <div key={log.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-2xl border-2 border-zinc-100 bg-zinc-50 hover:border-black hover:bg-white transition-colors gap-4">
+              <div key={log.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-2xl border-2 border-[#f7e4e9] bg-[#fdfafb] hover:border-[#dbafde] hover:bg-white transition-colors gap-4">
                  <div className="flex flex-col gap-1 pr-4">
-                    <span className="font-bold text-lg leading-tight">{log.topic}</span>
+                    <span className="font-bold text-lg leading-tight text-[#4a2b4d]">{log.topic}</span>
                  </div>
                  <div className="flex flex-col items-start sm:items-end gap-1 min-w-[120px]">
-                    <span className="text-lg font-bold uppercase tracking-widest text-rose-500">
+                    <span className="text-lg font-bold uppercase tracking-widest text-[#f7a1b2]">
                        {new Date(log.created_at).toLocaleDateString()}
                     </span>
                  </div>
@@ -308,45 +311,58 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f4f4f5] font-sans text-black overflow-hidden selection:bg-rose-200">
-      
+    <div className="flex min-h-screen items-center justify-center font-sans text-[#4a2b4d] overflow-hidden selection:bg-[#f9afbd] selection:text-[#4a2b4d] relative">
+      <div className="absolute top-8 left-12 text-[#4a2b4d] whitespace-pre font-mono text-sm pointer-events-none z-0 hidden md:block leading-snug">
+{`┊         ┊       ┊   ┊    ┊        ┊
+┊         ┊       ┊   ┊   ˚★⋆｡˚  ⋆
+┊         ┊       ┊   ⋆
+┊         ┊       ★⋆
+┊ ◦
+★⋆      ┊ .  ˚
+           ˚★`}
+      </div>
+
       {view === 'spinner' ? (
         <div className="flex flex-col items-center w-full max-w-5xl">
-        <main className="flex h-[500px] w-full items-center justify-between rounded-3xl border-4 border-black bg-white p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all relative">
+        <main className="flex h-[500px] w-full items-center justify-between rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-12 shadow-[12px_12px_0px_0px_#f9afbd] transition-all relative">
           
           <button 
             onClick={() => setView('history')}
-            className="absolute top-8 left-8 text-sm font-bold uppercase tracking-widest text-zinc-400 hover:text-black transition-colors z-20"
+            className="absolute top-8 left-8 text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors z-20"
           >
             History Log →
           </button>
 
           {/* APP TITLE */}
-          <div className="flex-[1.2] pr-8 z-10 w-full mt-4">
+          <div className="flex-[1.2] pr-4 z-10 w-full mt-0">
             <h1 
-              className="text-[4rem] tracking-tight leading-[0.9] drop-shadow-sm"
-              style={{ fontFamily: 'digibop, sans-serif', fontStyle: 'normal', fontWeight: 400 }}
+              className={`text-[5.2rem] tracking-tight leading-[0.75] ${retrogression.className}`}
+              style={{ fontStyle: 'normal', fontWeight: 400 }}
             >
-              Impromptu<br/>
-              <span className="text-rose-500">Speaking</span><br/>
-              Spinner
+              <span className="bg-gradient-to-b from-[#f7e4e9] via-[#f9afbd] to-[#e36b89] text-transparent bg-clip-text drop-shadow-sm">
+                Impromptu<br/>
+                Speaking<br/>
+                Daydream<br/>
+                Dial
+              </span>
+              <span className="text-[#4a2b4d] drop-shadow-sm text-[3.2rem] align-middle ml-4 relative -top-4">⋆｡°✩</span>
             </h1>
-            <p className="mt-6 text-zinc-500 font-medium text-lg leading-snug pr-4">
+            <p className="mt-8 text-[#b08ba6] font-medium text-lg leading-snug pr-4">
               Take 1 minute to speak on a random topic and improve your articulation.
             </p>
           </div>
 
           {/* Topic Spinner */}
           <div className="flex-[1.5] w-full flex justify-center relative">
-            <div className="h-72 w-full max-w-sm rounded-2xl border-4 border-black overflow-hidden relative shadow-[inset_0px_4px_12px_rgba(0,0,0,0.1)] bg-zinc-100 flex flex-col">
+            <div className="h-72 w-full max-w-sm rounded-[2rem] border-4 border-[#8a5a83] overflow-hidden relative shadow-[inset_0px_4px_12px_rgba(210,168,214,0.3)] bg-[#fdfafb] flex flex-col">
                {/* Gradient Overlays for depth */}
-               <div className="absolute top-0 w-full h-20 bg-gradient-to-b from-zinc-100 via-zinc-100/80 to-transparent z-10 pointer-events-none"></div>
-               <div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-zinc-100 via-zinc-100/80 to-transparent z-10 pointer-events-none"></div>
+               <div className="absolute top-0 w-full h-20 bg-gradient-to-b from-[#fdfafb] via-[#fdfafb]/80 to-transparent z-10 pointer-events-none"></div>
+               <div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-[#fdfafb] via-[#fdfafb]/80 to-transparent z-10 pointer-events-none"></div>
                
                {/* Selection indicator */}
-               <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[72px] border-y-4 border-black bg-rose-500/10 z-0 pointer-events-none">
-                  <div className="absolute -left-1 top-1/2 -translate-y-1/2 border-y-[10px] border-y-transparent border-l-[12px] border-l-black"></div>
-                  <div className="absolute -right-1 top-1/2 -translate-y-1/2 border-y-[10px] border-y-transparent border-r-[12px] border-r-black"></div>
+               <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[72px] border-y-4 border-[#f9afbd] bg-[#f9afbd]/20 z-0 pointer-events-none">
+                  <div className="absolute -left-1 top-1/2 -translate-y-1/2 border-y-[10px] border-y-transparent border-l-[12px] border-l-[#f9afbd]"></div>
+                  <div className="absolute -right-1 top-1/2 -translate-y-1/2 border-y-[10px] border-y-transparent border-r-[12px] border-r-[#f9afbd]"></div>
                </div>
 
                {/* Scrolling list */}
@@ -357,7 +373,7 @@ export default function Home() {
                   <div style={{ paddingTop: '108px' }}>
                     {isLoadingTopics ? (
                       <div className="h-[72px] flex items-center justify-center px-8 w-full">
-                         <span className="font-bold text-xl text-center leading-tight text-zinc-400 opacity-80 animate-pulse">
+                         <span className="font-bold text-xl text-center leading-tight text-[#b08ba6] opacity-80 animate-pulse">
                             Loading topics...
                          </span>
                       </div>
@@ -369,14 +385,14 @@ export default function Home() {
                       
                       return (
                         <div key={i} className="h-[72px] flex items-center justify-center px-8 w-full">
-                          <span className={`font-bold text-xl text-center leading-tight transition-all duration-300 ${isActiveVisual ? 'text-rose-500 drop-shadow-sm' : 'text-zinc-400 opacity-80'}`}>
+                          <span className={`font-bold text-xl text-center leading-tight transition-all duration-300 ${isActiveVisual ? 'text-[#c04b6c] drop-shadow-sm' : 'text-[#b08ba6] opacity-80'}`}>
                              {topic}
                           </span>
                         </div>
                       );
                     }) : (
                       <div className="h-[72px] flex items-center justify-center px-8 w-full">
-                         <span className="font-bold text-xl text-center leading-tight text-zinc-400 opacity-80">
+                         <span className="font-bold text-xl text-center leading-tight text-[#b08ba6] opacity-80">
                             No topics left!
                          </span>
                       </div>
@@ -393,13 +409,13 @@ export default function Home() {
               disabled={isSpinning || topics.length === 0}
               className="flex flex-col items-center gap-4 outline-none group pt-8 disabled:opacity-80 disabled:cursor-not-allowed"
             >
-              <div className={`text-xl font-bold uppercase tracking-widest transition-colors ${isSpinning ? 'text-rose-500' : 'text-zinc-400 group-hover:text-black'}`}>Spin</div>
+              <div className={`text-xl font-bold uppercase tracking-widest transition-colors ${isSpinning ? 'text-[#f7a1b2]' : 'text-[#8a5a83]'}`}>Spin</div>
               <div className="relative">
                 {/* Lever Base/Track */}
-                <div className="h-40 w-8 rounded-full bg-zinc-200 border-4 border-black shadow-[inset_-4px_-4px_0px_rgba(0,0,0,0.2)]"></div>
+                <div className="h-40 w-8 rounded-full bg-[#f8cedd] border-4 border-[#b08ba6] shadow-[inset_-4px_-4px_0px_rgba(210,168,214,0.3)]"></div>
                 {/* Knob */}
-                <div className={`absolute -left-4 h-16 w-16 rounded-full bg-rose-500 border-4 border-black transition-all duration-300 ease-out z-20 hover:bg-rose-400 cursor-pointer shadow-[inset_-4px_-4px_0px_rgba(0,0,0,0.2),_4px_4px_0px_rgba(0,0,0,1)]
-                  ${isSpinning ? 'translate-y-[6rem] shadow-[inset_-2px_-2px_0px_rgba(0,0,0,0.2),_0px_0px_0px_rgba(0,0,0,1)] !top-[-1.5rem] bg-rose-600' : '-top-6 group-hover:-translate-y-2 group-active:-translate-y-0 group-active:translate-y-[6rem] group-active:shadow-[inset_-2px_-2px_0px_rgba(0,0,0,0.2),_0px_0px_0px_rgba(0,0,0,1)]'}
+                <div className={`absolute -left-4 h-16 w-16 rounded-full bg-[#f9afbd] border-4 border-[#f9afbd] transition-all duration-300 ease-out z-20 hover:bg-[#f7a1b2] hover:border-[#f7a1b2] cursor-pointer shadow-[inset_-4px_-4px_0px_rgba(210,168,214,0.3),_4px_4px_0px_#dbafde]
+                  ${isSpinning ? 'translate-y-[6rem] shadow-[inset_-2px_-2px_0px_rgba(210,168,214,0.3),_0px_0px_0px_#dbafde] !top-[-1.5rem] bg-[#f7a1b2] border-[#f7a1b2]' : '-top-6 group-hover:-translate-y-2 group-active:-translate-y-0 group-active:translate-y-[6rem] group-active:shadow-[inset_-2px_-2px_0px_rgba(210,168,214,0.3),_0px_0px_0px_#dbafde]'}
                 `}></div>
               </div>
             </button>
@@ -409,13 +425,13 @@ export default function Home() {
         <div className="flex w-full mt-8 justify-between px-8">
           <button 
             onClick={() => setShowAddModal(true)}
-            className="text-base font-bold uppercase tracking-widest text-zinc-500 hover:text-black transition-colors"
+            className="text-base font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
           >
             + Add Custom Topic
           </button>
           <button 
             onClick={() => setView('topicBank')}
-            className="text-base font-bold uppercase tracking-widest text-zinc-500 hover:text-black transition-colors"
+            className="text-base font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
           >
             Topic Bank
           </button>
@@ -440,21 +456,21 @@ export default function Home() {
 
       {/* Add Custom Topic Modal */}
       {view === 'spinner' && showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 p-4">
-          <div className="w-[90%] max-w-md rounded-3xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center gap-6 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#4a2b4d]/20 backdrop-blur-sm transition-opacity duration-300 p-4">
+          <div className="w-[90%] max-w-md rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-8 shadow-[8px_8px_0px_0px_#f9afbd] flex flex-col items-center gap-6 relative">
             <button 
               onClick={() => setShowAddModal(false)}
-              className="absolute top-4 right-5 text-xl font-bold text-zinc-400 hover:text-black transition-colors"
+              className="absolute top-4 right-5 text-xl font-bold text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
               aria-label="Close modal"
             >
               ✕
             </button>
-            <h2 className="text-xl font-extrabold tracking-tight mt-2 text-rose-500 uppercase">Add Custom Topic</h2>
+            <h2 className="text-xl font-extrabold tracking-tight mt-2 text-[#f7a1b2] uppercase">Add Custom Topic</h2>
             <textarea
               value={newTopicVal}
               onChange={(e) => setNewTopicVal(e.target.value)}
               placeholder="e.g. the impact of tiktok on fast fashion..."
-              className="w-full rounded-2xl border-4 border-black p-4 font-bold placeholder:text-zinc-400 focus:outline-none focus:ring-4 focus:ring-rose-200 resize-none h-32"
+              className="w-full rounded-2xl border-4 border-[#4a2b4d] p-4 font-bold text-[#4a2b4d] placeholder:text-[#b08ba6] focus:outline-none focus:ring-4 focus:ring-[#f9afbd] resize-none h-32"
             />
             <button 
               onClick={async () => {
@@ -466,7 +482,7 @@ export default function Home() {
                   await supabase.from('daydream_topics').insert({ content: val, is_active: true });
                 }
               }}
-              className="w-full rounded-2xl bg-black py-4 text-lg font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(225,29,72,1)] active:translate-y-0 active:shadow-none"
+              className="w-full rounded-2xl bg-[#dbafde] py-4 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
             >
               Add to Spinner
             </button>
@@ -476,29 +492,29 @@ export default function Home() {
 
       {/* Modal Overlay */}
       {view === 'spinner' && showModal && topics.length > 0 && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300">
-          <div className="w-[90%] max-w-md rounded-3xl border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center gap-6 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#4a2b4d]/20 backdrop-blur-sm transition-opacity duration-300">
+          <div className="w-[90%] max-w-md rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-8 shadow-[8px_8px_0px_0px_#f9afbd] flex flex-col items-center gap-6 relative">
             <button 
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-5 text-xl font-bold text-zinc-400 hover:text-black transition-colors"
+              className="absolute top-4 right-5 text-xl font-bold text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
               aria-label="Close modal"
             >
               ✕
             </button>
-            <h2 className="text-sm font-bold uppercase tracking-widest text-rose-500 mt-2">Your Topic</h2>
+            <h2 className="text-sm font-bold uppercase tracking-widest text-[#f7a1b2] mt-2">Your Topic</h2>
             <p className="text-3xl font-bold tracking-tight text-center leading-tight">
               {selectedTopicStr}
             </p>
             <div className="flex w-full flex-col gap-3 mt-4">
               <button 
                 onClick={handleSelectTopic}
-                className="w-full rounded-2xl bg-black py-4 text-lg font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(225,29,72,1)] active:translate-y-0 active:shadow-none"
+                className="w-full rounded-2xl bg-[#dbafde] py-4 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
               >
                 Select Topic
               </button>
               <button 
                 onClick={handleSpin}
-                className="w-full rounded-2xl border-4 border-black bg-zinc-100 py-3 text-lg font-bold text-black transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none"
+                className="w-full rounded-2xl border-4 border-[#4a2b4d] bg-[#f8cedd] py-3 text-lg font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none"
               >
                 Respin
               </button>
