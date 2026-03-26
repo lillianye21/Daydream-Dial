@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="stylesheet" href="https://use.typekit.net/YOUR_PROJECT_ID.css" />
       </head>
       <body className={`${fredoka.variable} font-sans antialiased`}>

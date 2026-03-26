@@ -111,6 +111,16 @@ body {
   border-color: #8a5a83;
 }
 
-*, *::before, *::after {
-  cursor: none !important;
+/* Only hide cursor on devices with a fine pointer (mouse/trackpad) */
+@media (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+/* Hide the custom cursor follower on touch devices */
+@media (pointer: coarse) {
+  .custom-cursor-container {
+    display: none !important;
+  }
 }

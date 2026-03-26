@@ -8,7 +8,7 @@ const retrogression = localFont({ src: '../public/fonts/Retrogression-Regular.ot
 
 function TopicBankView({ topics, onBack }: { topics: string[], onBack: () => void }) {
   return (
-    <div className="flex h-[500px] w-full max-w-5xl flex-col rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-10 shadow-[12px_12px_0px_0px_#f9afbd] relative transition-all overflow-hidden">
+    <div className="flex min-h-[350px] md:h-[500px] w-full max-w-5xl flex-col rounded-[1.5rem] md:rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-5 md:p-10 shadow-[6px_6px_0px_0px_#f9afbd] md:shadow-[12px_12px_0px_0px_#f9afbd] relative transition-all overflow-hidden">
       <div className="flex justify-between items-center mb-8">
         <button 
           onClick={onBack}
@@ -102,7 +102,7 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
   const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
   return (
-    <div className="flex h-[500px] w-full max-w-5xl flex-col items-center justify-center rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-12 shadow-[12px_12px_0px_0px_#f9afbd] text-center relative transition-all">
+    <div className="flex min-h-[400px] md:h-[500px] w-full max-w-5xl flex-col items-center justify-center rounded-[1.5rem] md:rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-6 md:p-12 shadow-[6px_6px_0px_0px_#f9afbd] md:shadow-[12px_12px_0px_0px_#f9afbd] text-center relative transition-all">
       <button 
         onClick={onBack}
         className="absolute top-8 left-8 text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
@@ -110,40 +110,40 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
         ← Back
       </button>
 
-      <h2 className={`text-xl font-bold uppercase tracking-widest mb-4 ${phase === 'completed' ? 'text-[#4a2b4d]' : 'text-[#f7a1b2]'}`}>
+      <h2 className={`text-base md:text-xl font-bold uppercase tracking-widest mb-3 md:mb-4 ${phase === 'completed' ? 'text-[#4a2b4d]' : 'text-[#f7a1b2]'}`}>
         {phase === 'brainstorm' ? 'Brainstorming Session 💭' : phase === 'speak' ? 'Speaking Session 🎤' : 'Session Complete ✨'}
       </h2>
       
-      <p className="text-[2rem] font-extrabold tracking-tight leading-tight max-w-2xl mb-12">
+      <p className="text-xl md:text-[2rem] font-extrabold tracking-tight leading-tight max-w-2xl mb-6 md:mb-12">
         {topic}
       </p>
 
       {phase !== 'completed' ? (
         <>
-          <div className="text-8xl font-extrabold tabular-nums tracking-tight mb-12 drop-shadow-sm">
+          <div className="text-5xl md:text-8xl font-extrabold tabular-nums tracking-tight mb-6 md:mb-12 drop-shadow-sm">
             {timeString}
           </div>
 
           {!isRunning && timeLeft === 60 ? (
-            <div className="flex gap-4">
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
               <button 
                 onClick={handleStart}
-                className="rounded-2xl bg-[#dbafde] px-12 py-4 text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
+                className="rounded-2xl bg-[#dbafde] px-8 md:px-12 py-3 md:py-4 text-base md:text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#f7a1b2] active:translate-y-0 active:shadow-none"
               >
                 {phase === 'brainstorm' ? 'Start Brainstorming' : 'Start Speaking Now'}
               </button>
               <button 
                 onClick={() => { setTimeLeft(0); setIsRunning(true); }}
-                className="rounded-2xl px-8 py-4 text-xl font-bold text-[#f7a1b2] hover:text-[#e36b89] hover:bg-[#fdfafb] transition-colors"
+                className="rounded-2xl px-6 md:px-8 py-3 md:py-4 text-base md:text-xl font-bold text-[#f7a1b2] hover:text-[#e36b89] hover:bg-[#fdfafb] transition-colors"
               >
                 End Session
               </button>
             </div>
           ) : (
-            <div className="flex gap-4">
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
               <button 
                 onClick={isRunning ? handlePause : handleStart}
-                className="rounded-2xl border-4 border-[#4a2b4d] bg-white px-12 py-3 text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none min-w-[160px]"
+                className="rounded-2xl border-4 border-[#4a2b4d] bg-white px-8 md:px-12 py-3 text-base md:text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none min-w-[120px] md:min-w-[160px]"
               >
                 {isRunning ? 'Pause' : 'Resume'}
               </button>
@@ -152,13 +152,13 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
                   setIsRunning(false);
                   setTimeLeft(60);
                 }}
-                className="rounded-2xl px-8 py-3 text-xl font-bold text-[#b08ba6] hover:text-[#4a2b4d] hover:bg-[#f7e4e9] transition-colors"
+                className="rounded-2xl px-6 md:px-8 py-3 text-base md:text-xl font-bold text-[#b08ba6] hover:text-[#4a2b4d] hover:bg-[#f7e4e9] transition-colors"
               >
                 Restart
               </button>
               <button 
                 onClick={() => { setTimeLeft(0); setIsRunning(true); }}
-                className="rounded-2xl px-8 py-3 text-xl font-bold text-[#f7a1b2] hover:text-[#e36b89] hover:bg-[#fdfafb] transition-colors"
+                className="rounded-2xl px-6 md:px-8 py-3 text-base md:text-xl font-bold text-[#f7a1b2] hover:text-[#e36b89] hover:bg-[#fdfafb] transition-colors"
               >
                 End Session
               </button>
@@ -169,7 +169,7 @@ function TimerView({ topic, onBack, onComplete }: { topic: string; onBack: () =>
         <button 
           onClick={onBack}
           disabled={isSaving}
-          className="rounded-2xl bg-[#f9afbd] px-12 py-4 text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:cursor-wait"
+          className="rounded-2xl bg-[#f9afbd] px-8 md:px-12 py-3 md:py-4 text-base md:text-xl font-bold text-[#4a2b4d] transition-transform hover:-translate-y-1 hover:shadow-[0px_4px_0px_0px_#dbafde] active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:cursor-wait"
         >
           {isSaving ? 'Saving session log...' : 'Return to Spinner'}
         </button>
@@ -199,7 +199,7 @@ function HistoryView({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <div className="flex h-[500px] w-full max-w-5xl flex-col rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-10 shadow-[12px_12px_0px_0px_#f9afbd] relative transition-all overflow-hidden">
+    <div className="flex min-h-[350px] md:h-[500px] w-full max-w-5xl flex-col rounded-[1.5rem] md:rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-5 md:p-10 shadow-[6px_6px_0px_0px_#f9afbd] md:shadow-[12px_12px_0px_0px_#f9afbd] relative transition-all overflow-hidden">
       <div className="flex justify-between items-center mb-8">
         <button 
           onClick={onBack}
@@ -377,42 +377,42 @@ export default function Home() {
       </div>
 
       {view === 'spinner' ? (
-        <div className="flex flex-col items-center w-full max-w-5xl relative">
+        <div className="flex flex-col items-center w-full max-w-5xl relative px-4 md:px-0">
           {/* Illustrations */}
           <img 
             src="/images/bunny3.jpg" 
             alt="" 
-            className="absolute -top-[392px] -left-10 w-56 h-auto pointer-events-none animate-float-slow z-0 opacity-90 mix-blend-multiply"
+            className="hidden md:block absolute -top-[392px] -left-10 w-56 h-auto pointer-events-none animate-float-slow z-0 opacity-90 mix-blend-multiply"
           />
           <img 
             src="/images/bunny.jpg" 
             alt="" 
-            className="absolute -top-[326px] -right-16 w-52 h-auto pointer-events-none animate-float z-0 opacity-90 mix-blend-multiply"
+            className="hidden md:block absolute -top-[326px] -right-16 w-52 h-auto pointer-events-none animate-float z-0 opacity-90 mix-blend-multiply"
           />
           <img 
             src="/images/girl.png" 
             alt="" 
-            className="absolute -bottom-[520px] left-1/2 -translate-x-[60%] w-[32rem] h-auto pointer-events-none animate-drift z-0 opacity-95"
+            className="hidden md:block absolute -bottom-[520px] left-1/2 -translate-x-[60%] w-[32rem] h-auto pointer-events-none animate-drift z-0 opacity-95"
           />
           <img 
             src="/images/bunny2.jpg" 
             alt="" 
-            className="absolute -bottom-[342px] -right-[130px] w-56 h-auto pointer-events-none animate-float-slow z-0 opacity-90 mix-blend-multiply"
+            className="hidden md:block absolute -bottom-[342px] -right-[130px] w-56 h-auto pointer-events-none animate-float-slow z-0 opacity-90 mix-blend-multiply"
           />
 
-        <main className="flex h-[500px] w-full items-center justify-between rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-12 shadow-[12px_12px_0px_0px_#f9afbd] transition-all relative">
+        <main className="flex flex-col md:flex-row h-auto md:h-[500px] w-full items-center justify-between rounded-[1.5rem] md:rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white p-6 md:p-12 shadow-[6px_6px_0px_0px_#f9afbd] md:shadow-[12px_12px_0px_0px_#f9afbd] transition-all relative">
           
           <button 
             onClick={() => setView('history')}
-            className="absolute top-8 left-8 text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors z-20"
+            className="absolute top-4 left-5 md:top-8 md:left-8 text-xs md:text-sm font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors z-20"
           >
             History Log →
           </button>
 
           {/* APP TITLE */}
-          <div className="flex-[1.2] pr-4 z-10 w-full mt-0">
+          <div className="flex-[1.2] pr-0 md:pr-4 z-10 w-full mt-8 md:mt-0 text-center md:text-left">
             <h1 
-              className={`text-[5.2rem] tracking-tight leading-[0.75] ${retrogression.className}`}
+              className={`text-[2.8rem] md:text-[5.2rem] tracking-tight leading-[0.75] ${retrogression.className}`}
               style={{ fontStyle: 'normal', fontWeight: 400 }}
             >
               <span className="bg-gradient-to-b from-[#f7e4e9] via-[#f9afbd] to-[#e36b89] text-transparent bg-clip-text drop-shadow-sm">
@@ -421,16 +421,16 @@ export default function Home() {
                 Daydream<br/>
                 Dial
               </span>
-              <span className="text-[#4a2b4d] drop-shadow-sm text-[3.2rem] align-middle ml-4 relative -top-4">⋆｡°✩</span>
+              <span className="text-[#4a2b4d] drop-shadow-sm text-[2rem] md:text-[3.2rem] align-middle ml-2 md:ml-4 relative -top-2 md:-top-4">⋆｡°✩</span>
             </h1>
-            <p className="mt-8 text-[#b08ba6] font-medium text-lg leading-snug pr-4">
+            <p className="mt-4 md:mt-8 text-[#b08ba6] font-medium text-sm md:text-lg leading-snug pr-0 md:pr-4">
               Take 1 minute to speak on a random topic and improve your articulation.
             </p>
           </div>
 
           {/* Topic Spinner */}
-          <div className="flex-[1.5] w-full flex justify-center relative">
-            <div className="h-72 w-full max-w-sm rounded-[2rem] border-4 border-[#8a5a83] overflow-hidden relative shadow-[inset_0px_4px_12px_rgba(210,168,214,0.3)] bg-[#fdfafb] flex flex-col">
+          <div className="flex-[1.5] w-full flex justify-center relative mt-4 md:mt-0">
+            <div className="h-56 md:h-72 w-full max-w-sm rounded-[1.5rem] md:rounded-[2rem] border-4 border-[#8a5a83] overflow-hidden relative shadow-[inset_0px_4px_12px_rgba(210,168,214,0.3)] bg-[#fdfafb] flex flex-col">
                {/* Gradient Overlays for depth */}
                <div className="absolute top-0 w-full h-20 bg-gradient-to-b from-[#fdfafb] via-[#fdfafb]/80 to-transparent z-10 pointer-events-none"></div>
                <div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-[#fdfafb] via-[#fdfafb]/80 to-transparent z-10 pointer-events-none"></div>
@@ -479,7 +479,7 @@ export default function Home() {
           </div>
 
           {/* Lever */}
-          <div className="flex-[0.8] flex justify-end">
+          <div className="flex-[0.8] flex justify-center md:justify-end mt-4 md:mt-0">
             <button 
               onClick={handleSpin}
               disabled={isSpinning || topics.length === 0}
@@ -488,7 +488,7 @@ export default function Home() {
               <div className={`text-xl font-bold uppercase tracking-widest transition-colors ${isSpinning ? 'text-[#f7a1b2]' : 'text-[#8a5a83]'}`}>Spin</div>
               <div className="relative">
                 {/* Lever Base/Track */}
-                <div className="h-40 w-8 rounded-full bg-[#f8cedd] border-4 border-[#b08ba6] shadow-[inset_-4px_-4px_0px_rgba(210,168,214,0.3)]"></div>
+                <div className="h-28 md:h-40 w-8 rounded-full bg-[#f8cedd] border-4 border-[#b08ba6] shadow-[inset_-4px_-4px_0px_rgba(210,168,214,0.3)]"></div>
                 {/* Knob */}
                 <div className={`absolute -left-4 h-16 w-16 rounded-full bg-[#f9afbd] border-4 border-[#f9afbd] transition-all duration-300 ease-out z-20 hover:bg-[#f7a1b2] hover:border-[#f7a1b2] cursor-pointer shadow-[inset_-4px_-4px_0px_rgba(210,168,214,0.3),_4px_4px_0px_#dbafde]
                   ${isSpinning ? 'translate-y-[6rem] shadow-[inset_-2px_-2px_0px_rgba(210,168,214,0.3),_0px_0px_0px_#dbafde] !top-[-1.5rem] bg-[#f7a1b2] border-[#f7a1b2]' : '-top-6 group-hover:-translate-y-2 group-active:-translate-y-0 group-active:translate-y-[6rem] group-active:shadow-[inset_-2px_-2px_0px_rgba(210,168,214,0.3),_0px_0px_0px_#dbafde]'}
@@ -498,7 +498,7 @@ export default function Home() {
           </div>
 
         </main>
-        <div className="flex w-full mt-8 justify-between px-8">
+        <div className="flex flex-col md:flex-row items-center w-full mt-6 md:mt-8 justify-between gap-3 md:gap-0 px-4 md:px-8">
           <button 
             onClick={() => setShowAddModal(true)}
             className="text-base font-bold uppercase tracking-widest text-[#b08ba6] hover:text-[#4a2b4d] transition-colors"
