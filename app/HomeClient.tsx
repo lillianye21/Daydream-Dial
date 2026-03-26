@@ -255,6 +255,29 @@ export default function Home() {
   const [newTopicVal, setNewTopicVal] = useState("");
   const [isLoadingTopics, setIsLoadingTopics] = useState(true);
 
+  const CURSOR_IMAGES = [
+    '/cursors/Photoroom_20260326_002146.png',
+    '/cursors/Photoroom_20260326_002323.png',
+    '/cursors/Photoroom_20260326_005250.png',
+    '/cursors/Photoroom_20260326_005323.png',
+  ];
+
+  const [selectedCursor, setSelectedCursor] = useState(CURSOR_IMAGES[0]);
+  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    // Random Initial Cursor
+    const randomIdx = Math.floor(Math.random() * CURSOR_IMAGES.length);
+    setSelectedCursor(CURSOR_IMAGES[randomIdx]);
+
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   useEffect(() => {
     async function fetchTopics() {
       setIsLoadingTopics(true);
@@ -312,6 +335,22 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center font-sans text-[#4a2b4d] overflow-hidden selection:bg-[#f9afbd] selection:text-[#4a2b4d] relative">
+      {/* Custom Cursor */}
+      <div 
+        className="custom-cursor-container"
+        style={{ 
+          left: `${mousePos.x}px`, 
+          top: `${mousePos.y}px`,
+          position: 'fixed',
+          pointerEvents: 'none',
+          zIndex: 9999,
+          width: '64px',
+          height: '64px',
+          transform: 'translate(-10px, -10px)',
+        }}
+      >
+        <img src={selectedCursor} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', pointerEvents: 'none' }} />
+      </div>
       <div className="absolute top-8 left-12 text-[#4a2b4d] whitespace-pre font-mono text-sm pointer-events-none z-0 hidden md:block leading-snug">
 {`┊         ┊       ┊   ┊    ┊        ┊
 ┊         ┊       ┊   ┊   ˚★⋆｡˚  ⋆
@@ -320,6 +359,21 @@ export default function Home() {
 ┊ ◦
 ★⋆      ┊ .  ˚
            ˚★`}
+      </div>
+
+      {/* Cursor Menu - absolutely positioned on the left */}
+      <div className="hidden lg:flex flex-col rounded-[2.5rem] border-4 border-[#4a2b4d] bg-white items-center justify-around p-5 shadow-[12px_12px_0px_0px_#f9afbd] z-20"
+        style={{ position: 'absolute', left: '40px', top: '50%', transform: 'translateY(-50%)', width: '110px', gap: '16px' }}
+      >
+        {CURSOR_IMAGES.map((img, i) => (
+          <button
+            key={i}
+            onClick={() => setSelectedCursor(img)}
+            className={`cursor-menu-item ${selectedCursor === img ? 'active' : ''}`}
+          >
+            <img src={img} alt="" style={{ width: i === 0 ? '100px' : '90px', height: i === 0 ? '100px' : '90px', objectFit: 'contain' }} />
+          </button>
+        ))}
       </div>
 
       {view === 'spinner' ? (
